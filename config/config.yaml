@@ -1,0 +1,21 @@
+defaults:
+  - base_config
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+  - _self_
+
+hydra:
+  run:
+    dir: logs/${env.name}/${algo.name}/${code}/${run}/${seed}
+  sweep:
+    dir: logs
+    subdir: ${env.name}/${algo.name}/${code}/${run}/${seed}
+  job:
+    chdir: true
+  job_logging:
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s:%(lineno)d][%(levelname)s] - %(message)s'
+      colorlog:
+        format: '[%(cyan)s%(asctime)s%(reset)s][%(blue)s%(name)s:%(lineno)d%(reset)s][%(log_color)s%(levelname)s%(reset)s]
+          - %(message)s'
